@@ -34,10 +34,8 @@ public class Ex02_2_HTTPGetClient {
 			}
 			br.close();
 		} catch (UnknownHostException anEx) {
-			// TODO Auto-generated catch block
 			anEx.printStackTrace();
 		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
 			anEx.printStackTrace();
 		}
 	}

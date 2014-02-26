@@ -1,3 +1,4 @@
+package Ex02_5_Fraktal;
 import java.io.Serializable;
 
 /**

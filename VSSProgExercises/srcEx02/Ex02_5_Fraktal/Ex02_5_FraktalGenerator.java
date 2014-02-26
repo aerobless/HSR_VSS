@@ -1,3 +1,4 @@
+package Ex02_5_Fraktal;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
