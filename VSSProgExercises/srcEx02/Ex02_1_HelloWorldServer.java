@@ -11,15 +11,12 @@ public class Ex02_1_HelloWorldServer {
 		while(true){
 			ServerSocket server = new ServerSocket(port);
 			System.out.println("server> Waiting for client...");
+
+			// To provoke CLIENT timeout, Thread.sleep(10000) here.
 			Socket client = new Socket();
-			client.setSoTimeout(300);
+			client.setSoTimeout(100);
 			client = server.accept();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException anEx) {
-				// TODO Auto-generated catch block
-				anEx.printStackTrace();
-			}
+
 			System.out.println("sever> Client from "+ client.getInetAddress()+ " connected.");
 			
 			PrintWriter out = new PrintWriter(client.getOutputStream(), true);

@@ -13,9 +13,20 @@ public class Ex02_1_HelloWorldClient {
 		//Connection to server
 		Socket server;
 		try {
+
 			server = new Socket();
 			// Connection Timeout of 500 MS
-			server.connect(new InetSocketAddress(host, port), 100);
+			server.setSoTimeout(500);
+			server.connect(new InetSocketAddress(host, port));
+			
+			// To provoke SERVER timeout, Thread.sleep(10000) here.
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException anEx) {
+				// TODO Auto-generated catch block
+				anEx.printStackTrace();
+			}
+			
 			System.out.println("client> Connected to " + server.getInetAddress());
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
@@ -27,5 +38,4 @@ public class Ex02_1_HelloWorldClient {
 			anEx.printStackTrace();
 		}
 	}
-
 }
