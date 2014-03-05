@@ -23,9 +23,6 @@ public class Ex03_TwitterMessageConsumer {
         
         QueueingConsumer consumer = new QueueingConsumer(channel);
         channel.basicConsume(queueName, true, consumer);
-
-        /*Bind queue and exchange*/
-        channel.queueBind("", EXCHANGE_NAME, "");
  
         while (true) {
             QueueingConsumer.Delivery delivery = consumer.nextDelivery();
