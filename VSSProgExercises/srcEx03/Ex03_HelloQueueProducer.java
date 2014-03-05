@@ -25,6 +25,10 @@ public class Ex03_HelloQueueProducer {
 		Map<String, Object> props = null;
 		channel.queueDeclare(queueName, durable, exclusive, autoDelete, props);
 		
+		/* It doesn't matter if we first start the producer or the consumer,
+		 * if we first start the producer, the message gets stored in the queue until
+		 * the consumer is started and gets it from there.
+		 */
 		String message = "Hello World!";
 		channel.basicPublish("", queueName, null, message.getBytes());
 		System.out.println(" [x] Sent '" + message + "'");
