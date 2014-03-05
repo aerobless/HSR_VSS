@@ -1,6 +1,6 @@
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
 
 public class Ex03_TwitterMessageConsumer {
@@ -12,17 +12,21 @@ public class Ex03_TwitterMessageConsumer {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        //TODO Deklariere exchange
+        /*Declare exchange, we can see the exchange with "$ rabbitmqctl list_exchanges"*/
+        channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-        //TODO Erstellen einer nameless queue
-
-        //TODO Binde queue und exchange
-
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        /*Creating a nameless queue, we can see those with "$ rabbitmqctl list_bindings"*/
+        String queueName = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName, EXCHANGE_NAME, "");
+        
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C.");
+        
         QueueingConsumer consumer = new QueueingConsumer(channel);
+        channel.basicConsume(queueName, true, consumer);
 
-        //TODO basicConsume
-
+        /*Bind queue and exchange*/
+        channel.queueBind("", EXCHANGE_NAME, "");
+ 
         while (true) {
             QueueingConsumer.Delivery delivery = consumer.nextDelivery();
             String message = new String(delivery.getBody());
