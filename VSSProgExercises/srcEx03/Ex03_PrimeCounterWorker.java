@@ -14,8 +14,7 @@ public class Ex03_PrimeCounterWorker {
         Channel channel = connection.createChannel();
         channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C.");
-  
-        //TODO faire Verteilung
+
         QueueingConsumer consumer = new QueueingConsumer(channel);
         
 		channel.basicConsume(TASK_QUEUE_NAME, false, consumer);
@@ -35,7 +34,6 @@ public class Ex03_PrimeCounterWorker {
     		System.out.println("Primes-Calculator"+randomID+": "+primer.countPrimes());
         }
     }
-    
 
     private static class PrimeCounter {
         private final long start;
