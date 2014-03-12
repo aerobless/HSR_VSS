@@ -19,6 +19,7 @@ public class WakeUpThread extends Thread {
             Thread.currentThread().interrupt();
         }
 		try {
+			System.out.println("time's up - trying to wake client now...");
 			client.wakeup();
 		}
 		catch (RemoteException re) {

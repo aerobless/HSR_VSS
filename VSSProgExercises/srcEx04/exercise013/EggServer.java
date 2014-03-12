@@ -12,20 +12,20 @@ public class EggServer implements Timer{
 			EggServer eggServ = new EggServer();
 			Timer stub = (Timer) UnicastRemoteObject.exportObject(eggServ, PORT);
 	           Registry registry = LocateRegistry.createRegistry(PORT);
-	           registry.rebind(HOST, stub);
+	           registry.rebind("egg", stub); //TODO name!?
 	            System.out.println("Egg-Server bound on "+PORT);
 	            System.out.println("------------------------------");
 		} catch (Exception E){
 	        System.err.println("Egg-Server exception:");
 	        E.printStackTrace();			
 		}
-
 	}
 
 	@Override
 	public void setTimer(int aTime, Wakeupable aTarget) throws RemoteException {
 		//TODO: not sure if we should add this to some sort of collection in case we get multiple alarms..
 		WakeUpThread waker = new WakeUpThread(aTime, aTarget);
-		waker.run();
+		waker.start();
+		System.out.println("Setting timer to wake client");
 	}
 }
