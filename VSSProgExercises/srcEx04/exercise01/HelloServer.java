@@ -18,7 +18,7 @@ public class HelloServer implements Hello {
             Hello stub = (Hello) UnicastRemoteObject.exportObject(hello, PORT);
             Registry registry = LocateRegistry.createRegistry(PORT);
             registry.rebind(NAME, stub);
-            System.out.println("HelloServer bound");
+            System.out.println("HelloServer bound on"+PORT);
         } catch (Exception e) {
             System.err.println("HelloServer exception:");
             e.printStackTrace();

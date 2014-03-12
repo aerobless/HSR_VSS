@@ -1,0 +1,3 @@
+grant codeBase "file:/home/aerobless/test/" {
+    permission java.security.AllPermission;
+};
