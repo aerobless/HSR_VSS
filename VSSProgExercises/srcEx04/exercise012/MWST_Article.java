@@ -3,6 +3,9 @@ package exercise012;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Don't forget to make the transported object SERIALIZEABLE !!
+ */
 public class MWST_Article implements Serializable {
 	private static final long serialVersionUID = 4416655274987471424L;
 	String name;
