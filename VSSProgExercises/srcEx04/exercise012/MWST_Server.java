@@ -19,6 +19,7 @@ public class MWST_Server implements MWST_RemoteInterface {
 		double total = 0;
 		for (MWST_Article art : articles) {
 			total += art.value.doubleValue();
+			total = total*1.08;
 			System.out.println(art.name+" "+art.value);
 		}
 		System.out.println("ServerConsole: "+total);
