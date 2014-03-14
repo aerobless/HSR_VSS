@@ -41,7 +41,7 @@ public class Ex02_5_FraktalClient {
     private static ImageIcon fetchFraktalFromServer() {
     	ImageIcon fractalImage = null;
     	try {
-	    	Socket s = new Socket("localhost",16666);  
+	    	Socket s = new Socket("mc.blood-cloud.com",5222);  
 	    	OutputStream os = s.getOutputStream();  
 	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 	    	

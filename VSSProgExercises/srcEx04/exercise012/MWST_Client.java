@@ -14,9 +14,10 @@ public class MWST_Client {
             MWST_RemoteInterface mwst = (MWST_RemoteInterface) registry.lookup(MWST_RemoteInterface.NAME);
             
             //Create articles:
-            MWST_Article art1 = new MWST_Article("M-Budget EnergyDrink", new BigDecimal(0.7));
-            MWST_Article art2 = new MWST_Article("RedBull", new BigDecimal(2.2));
-            MWST_Article art3 = new MWST_Article("Coca Cola", new BigDecimal(1.2));
+            MWST_Article art1 = new MWST_Article("M-Budget EnergyDrink", BigDecimal.valueOf(0.7));
+            MWST_Article art2 = new MWST_Article("RedBull", BigDecimal.valueOf(2.2));
+            MWST_Article art3 = new MWST_Article("Coca Cola", BigDecimal.valueOf(1.2));
+            
             Collection<MWST_Article> articles =  new ArrayList<MWST_Article>();          
             articles.add(art1);
             articles.add(art2);

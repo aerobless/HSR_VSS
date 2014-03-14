@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 
 public class Ex02_5_FraktalServer {
-	public static final int PORT = 16666;
+	public static final int PORT = 5222;
 
 	public static void main(String[] args) throws Exception {
 		while(true){
