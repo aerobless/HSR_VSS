@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class MapReduceWordCount {
 
@@ -49,12 +51,33 @@ public class MapReduceWordCount {
 		shuffle(blockSplitterShards);
 	}
 	
+	/*
+	 * This exercise is beyond pointless..
+	 */
 	public static void shuffle(ArrayList<String[]> input){
-		Arrays.sort(input);
-		System.out.println(input[0]+" "+input[1]);
+		for(String[] splitters : input){
+			Arrays.sort(splitters);
+		}
+		reduce(input);
 	}
 	
-	public static void reduce(){
-		
+	/*
+	 * 
+	 */
+	public static void reduce(ArrayList<String[]> input){
+		HashMap<String, Integer> reduceMap = new HashMap<String, Integer>();
+		for(String[] splitters : input){
+			for(String shard : splitters){
+				if(reduceMap.containsKey(shard)){
+					reduceMap.put(shard, reduceMap.get(shard)+1);				
+				}
+				else{
+					reduceMap.put(shard, 1);
+				}
+			}
+		}
+		for(Entry<String, Integer> out : reduceMap.entrySet()){
+			System.out.println(out.getKey());
+		}
 	}
 }
