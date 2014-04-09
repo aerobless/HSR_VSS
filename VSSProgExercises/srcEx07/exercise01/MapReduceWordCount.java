@@ -3,15 +3,25 @@ package exercise01;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MapReduceWordCount {
 
+	/*
+	 * The idea of this exercise is to build a model for the map reduce
+	 * pattern by creating a wordCount class. There are more efficient & easier
+	 * ways to count words (for example by simply using a hashmap). So don't
+	 * use this code if your intention is to simply count words and you 
+	 * found this in a github search.
+	 * 
+	 * Map-Reduce:
+	 * http://www.rabidgremlin.com/data20/MapReduceWordCountOverview1.png
+	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			map("srcEx07/exercise01/Words.txt");
 		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
 			anEx.printStackTrace();
 		}
 	}
@@ -24,13 +34,24 @@ public class MapReduceWordCount {
 	 * http://stackoverflow.com/questions/2356251/string-tokenizer-in-java
 	 */
 	public static void map(String filepath) throws IOException{
+		//Input:
 		File f = new File(filepath);
 		String input = new String(Files.readAllBytes(f.toPath()));
-		String[] inputArray = input.split(" ");
+		
+		//Splitting:
+		String[] blockSplitters = input.split(".");
+		
+		//Mapping:
+		ArrayList<String[]> blockSplitterShards = new ArrayList<String[]>();
+		for(String splitter : blockSplitters){
+			blockSplitterShards.add(splitter.split(" "));
+		}
+		shuffle(blockSplitterShards);
 	}
 	
-	public static void shuffle(){
-		
+	public static void shuffle(ArrayList<String[]> input){
+		Arrays.sort(input);
+		System.out.println(input[0]+" "+input[1]);
 	}
 	
 	public static void reduce(){
