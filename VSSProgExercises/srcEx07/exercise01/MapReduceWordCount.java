@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class MapReducer {
+public class MapReduceWordCount {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
