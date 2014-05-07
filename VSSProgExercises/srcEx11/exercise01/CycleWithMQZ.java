@@ -2,7 +2,7 @@ package exercise01;
 
 import java.io.IOException;
 
-public class Cycle {
+public class CycleWithMQZ {
 	static class Message {
 		String type;
 
@@ -15,8 +15,8 @@ public class Cycle {
 	}
 
 	static class Participant extends Thread {
-		MessageQueue previous;
-		MessageQueue next;
+		MessageQueueZero previous;
+		MessageQueueZero next;
 		int value;
 		Participant boss;
 		public void run() {
@@ -50,11 +50,11 @@ public class Cycle {
 		final int n = 9;
 		final int[] value = { 11, 9, 17, 6, 15, 19, 2, 12, 7 };
 		Participant[] part = new Participant[n];
-		MessageQueue[] q = new MessageQueue[n];
+		MessageQueueZero[] q = new MessageQueueZero[n];
 		for (int i = 0; i < n; i++) {
 			part[i] = new Participant();
 			part[i].value = value[i];
-			q[i] = new MessageQueue(1);
+			q[i] = new MessageQueueZero();
 		}
 
 		for (int i = 0; i < n; i++) {
@@ -85,8 +85,7 @@ public class Cycle {
 		}
 
 		for (int i = 0; i < n; i++) {
-			System.out
-					.println(part[i].value + " boss : " + part[i].boss.value);
+			System.out.println(part[i].value + " boss : " + part[i].boss.value);
 		}
 	}
 }

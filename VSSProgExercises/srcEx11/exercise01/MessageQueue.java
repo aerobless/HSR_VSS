@@ -13,7 +13,7 @@ public class MessageQueue
 		entries = 0;
 	}
 
-	synchronized void send(Object x) throws InterruptedException {
+	public synchronized void send(Object x) throws InterruptedException {
 		while (entries == maxEntries)
 			wait();
 		
@@ -22,7 +22,7 @@ public class MessageQueue
 		notifyAll();
 	}
 
-	synchronized Object receive() throws InterruptedException {
+	public synchronized Object receive() throws InterruptedException {
 
 		while (entries == 0)
 			wait();

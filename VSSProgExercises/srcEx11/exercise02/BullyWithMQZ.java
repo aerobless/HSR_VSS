@@ -1,8 +1,10 @@
-package exercise01;
+package exercise02;
 
 import java.io.IOException;
 
-public class Cycle {
+import exercise01.MessageQueueZero;
+ 
+public class BullyWithMQZ {
 	static class Message {
 		String type;
 
@@ -15,30 +17,37 @@ public class Cycle {
 	}
 
 	static class Participant extends Thread {
-		MessageQueue previous;
-		MessageQueue next;
+		MessageQueueZero inbox;
+
+		MessageQueueZero[] neighbour;
+
 		int value;
+
 		Participant boss;
+
+		Participant me;
+
 		public void run() {
+			boss = this;
+			me = this;
+			(new Thread() {
+				public void run() {
+					for (int i = 0; i < neighbour.length; i++)
+						try {
+							neighbour[i].send(new Message("election", me));
+						} catch (Exception e) {
+						}
+				}
+			}).start();
 			try {
 				for (;;) {
-					Message m = (Message) previous.receive();
+					Message m = (Message) inbox.receive();
 					System.out.println(value + " receives " + m.type + " "
 							+ m.candidate.value);
+
 					if (m.type == "election") {
-						if (m.candidate.value > value)
-							next.send(m);
-						else if (m.candidate.value < value)
-							next.send(new Message("election", this));
-						else
-							next.send(new Message("elected", this));
-					} else {
-						// m.type=="elected"
-						boss = m.candidate;
-						if (m.candidate.value == value)
-							return;
-						else
-							next.send(m);
+						if (m.candidate.value > boss.value)
+							boss = m.candidate;
 					}
 				}
 			} catch (Exception e) {
@@ -50,33 +59,31 @@ public class Cycle {
 		final int n = 9;
 		final int[] value = { 11, 9, 17, 6, 15, 19, 2, 12, 7 };
 		Participant[] part = new Participant[n];
-		MessageQueue[] q = new MessageQueue[n];
+		MessageQueueZero[] q = new MessageQueueZero[n];
+
 		for (int i = 0; i < n; i++) {
 			part[i] = new Participant();
 			part[i].value = value[i];
-			q[i] = new MessageQueue(1);
+			q[i] = new MessageQueueZero();
 		}
 
 		for (int i = 0; i < n; i++) {
-			part[i].previous = q[i];
-			part[i].next = q[(i + 1) % n];
+			part[i].inbox = q[i];
+			part[i].neighbour = new MessageQueueZero[n];
 		}
 
 		for (int i = 0; i < n; i++) {
-			System.out.println(part[i].value + " next "
-					+ part[(i + 1) % n].value);
-			if (part[i].next != part[(i + 1) % n].previous)
-				System.out.println("Connection Error");
+			for (int j = 0; j < n; j++) {
+				part[i].neighbour[j] = part[j].inbox;
+			}
 		}
 
 		for (int i = 0; i < n; i++) {
 			part[i].start();
 		}
 
-		Participant p = part[0];
 		try {
-			p.next.send(new Message("election", p));
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (Exception e) {
 		}
 
@@ -85,8 +92,9 @@ public class Cycle {
 		}
 
 		for (int i = 0; i < n; i++) {
-			System.out
-					.println(part[i].value + " boss : " + part[i].boss.value);
+			if (part[i].boss != null)
+				System.out.println(part[i].value + " boss : "
+						+ part[i].boss.value);
 		}
 	}
 }
